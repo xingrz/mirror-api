@@ -17,8 +17,8 @@ Location.list(function (err, locations) {
 #### Arguments
 
 - **callback(err, locations)** Function - The callback
-  - ***err*** {Error|null} - An error object
-  - **locations** [{Location}] - An array of Locations
+  - ***err*** Error | null - An error object
+  - **locations** [Location] - An array of Locations
 
 #### Returns
 
@@ -38,8 +38,8 @@ Location.get('latest', function (err, location) {
 
 - ***id*** String - The id of a location record, defaults to `latest`
 - **callback(err, location)** Function - The callback
-  - ***err*** {Error|null} - An error object
-  - **location** {Location} - The Location
+  - ***err*** Error | null - An error object
+  - **location** Location - The Location
 
 #### Returns
 
