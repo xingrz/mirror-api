@@ -1,7 +1,7 @@
 # Locations
 
 ```js
-var Location = require('mirror-api').Location
+var Location = require('mirror-api')(options).Location
 ```
 
 ## Properties
