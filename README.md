@@ -10,9 +10,9 @@ This module is currently in development.
 ## API Documentation
 
 - [Timeline](doc/timeline.md)
-- [Subscriptions](doc/subscriptions.md)
-- [Locations](doc/locations.md)
-- [Contacts](doc/contacts.md)
+- [Subscription](doc/subscription.md)
+- [Location](doc/location.md)
+- [Contact](doc/contact.md)
 
 ## License
 
