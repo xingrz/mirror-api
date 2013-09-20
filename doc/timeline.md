@@ -2,7 +2,31 @@ Timeline
 ==========
 
 ```js
-var Timeline = require('mirror-api')(options).Timeline
+var Mirror = require('mirror-api')
+  , OAuthic = require('oauthic-google').client({
+      clientId: 'YOUR_CLIENT_ID'
+    , clientSecret: 'YOUR_CLIENT_SECRET'
+    })
+
+express.post('/timeline/send', function (req, res) {
+  var oauthic = OAuthic
+    .token(req.user.accessToken, req.user.expiresAt)
+    .refresh(req.user.refreshToken, function (refreshed, done) {
+      req.user.accessToken = refreshed.accessToken
+      req.user.expiresAt   = refreshed.expiresAt
+      req.user.save(done)
+    })
+
+  var Timeline = Mirror(oauthic).Timeline
+
+  Timeline.create({ text: req.body.text }, function (err, timeline) {
+    if (err) {
+      return res.send(500)
+    }
+    
+    return res.send('Timeline card created')
+  })
+})
 ```
 
 ## Timeline(options)
