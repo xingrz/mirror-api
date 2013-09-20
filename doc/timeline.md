@@ -8,23 +8,27 @@ var Mirror = require('mirror-api')
     , clientSecret: 'YOUR_CLIENT_SECRET'
     })
 
-express.post('/timeline/send', function (req, res) {
+express.post('/timeline/send', function (req, res, error) {
+  // Set up oauthic
   var oauthic = OAuthic
-    .token(req.user.accessToken, req.user.expiresAt)
-    .refresh(req.user.refreshToken, function (refreshed, done) {
-      req.user.accessToken = refreshed.accessToken
-      req.user.expiresAt   = refreshed.expiresAt
-      req.user.save(done)
-    })
+  .token(req.user.accessToken, req.user.expiresAt)
+  .refresh(req.user.refreshToken, function (refreshed, done) {
+    req.user.accessToken = refreshed.accessToken
+    req.user.expiresAt   = refreshed.expiresAt
+    req.user.save(done)
+  })
 
+  // Initialize mirror client with oauthic.
+  // You should also just provide an { accessToken: '....' } object
+  // instead of an oauthic instance.
   var Timeline = Mirror(oauthic).Timeline
 
   Timeline.create({ text: req.body.text }, function (err, timeline) {
     if (err) {
-      return res.send(500)
+      return error(err)
     }
     
-    return res.send('Timeline card created')
+    res.send('Timeline card created')
   })
 })
 ```
